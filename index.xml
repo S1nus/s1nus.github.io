@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cnode&#39;s blog on cnode.phd</title>
-    <link>https://cnode.phd/</link>
+    <link>https://s1nus.github.io/</link>
     <description>Recent content in cnode&#39;s blog on cnode.phd</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Copyright © 2025, colludingnode</copyright>
     <lastBuildDate>Mon, 05 May 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://cnode.phd/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://s1nus.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tree-Folding part 2</title>
-      <link>https://cnode.phd/folding_with_protogalaxy2/</link>
+      <link>https://s1nus.github.io/folding_with_protogalaxy2/</link>
       <pubDate>Mon, 05 May 2025 00:00:00 +0000</pubDate>
-      <guid>https://cnode.phd/folding_with_protogalaxy2/</guid>
+      <guid>https://s1nus.github.io/folding_with_protogalaxy2/</guid>
       <description>&lt;h2 id=&#34;tree-folding-part-2&#34;&gt;Tree-Folding part 2&lt;/h2&gt;&#xA;&lt;p&gt;In &lt;a href=&#34;http://localhost:1313/folding_with_protogalaxy/&#34;&gt;part 1&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Tree-Folding part 1</title>
-      <link>https://cnode.phd/folding_with_protogalaxy/</link>
+      <link>https://s1nus.github.io/folding_with_protogalaxy/</link>
       <pubDate>Tue, 29 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://cnode.phd/folding_with_protogalaxy/</guid>
+      <guid>https://s1nus.github.io/folding_with_protogalaxy/</guid>
       <description>&lt;h2 id=&#34;tree-folding-part-1&#34;&gt;Tree-Folding part 1&lt;/h2&gt;&#xA;&lt;p&gt;This series is about approaching ZK research from a software-engineering perspective. We will be studying folding schemes by implementing &amp;ldquo;tree-folding&amp;rdquo; for &lt;a href=&#34;https://eprint.iacr.org/2023/1106.pdf&#34;&gt;protogalaxy&lt;/a&gt; using &lt;a href=&#34;https://github.com/privacy-scaling-explorations/sonobe/&#34;&gt;Sonobe&lt;/a&gt;, to answer some research questions.&lt;/p&gt;&#xA;&lt;h2 id=&#34;recursive-zk-proofs&#34;&gt;Recursive ZK Proofs&lt;/h2&gt;&#xA;&lt;p&gt;When you verify a zk proof inside of another zk proof, that’s called a recursive zk proof. Although it sounds silly; perhaps like something Xzibit would say on Pimp My Ride, recursive proof composition is extremely useful!&lt;/p&gt;</description>
     </item>
   </channel>

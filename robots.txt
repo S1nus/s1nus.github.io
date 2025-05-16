@@ -1,2 +1,2 @@
 User-Agent: *
-Sitemap: https://cnode.phd/sitemap.xml
+Sitemap: https://s1nus.github.io/sitemap.xml
