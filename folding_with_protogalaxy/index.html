@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tree-Folding part 1 | cnode.phd</title>
+<meta name="title" content="Tree-Folding part 1" />
+<meta name="description" content="Intro to Folding Schemes" />
+<meta name="keywords" content="" />
+
+
+<meta property="og:url" content="http://localhost:1313/folding_with_protogalaxy/">
+  <meta property="og:site_name" content="cnode.phd">
+  <meta property="og:title" content="Tree-Folding part 1">
+  <meta property="og:description" content="Intro to Folding Schemes">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2025-04-29T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-04-29T00:00:00+00:00">
+    <meta property="og:image" content="http://localhost:1313/images/share.png">
+
+
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/images/share.png">
+  <meta name="twitter:title" content="Tree-Folding part 1">
+  <meta name="twitter:description" content="Intro to Folding Schemes">
+
+
+
+
+  <meta itemprop="name" content="Tree-Folding part 1">
+  <meta itemprop="description" content="Intro to Folding Schemes">
+  <meta itemprop="datePublished" content="2025-04-29T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-04-29T00:00:00+00:00">
+  <meta itemprop="wordCount" content="547">
+  <meta itemprop="image" content="http://localhost:1313/images/share.png">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  :root {
+      --width: 720px;
+      --font-main: Verdana, sans-serif;
+      --font-secondary: Verdana, sans-serif;
+      --font-scale: 1em;
+      --background-color: #fff;
+      --heading-color: #222;
+      --text-color: #444;
+      --link-color: #3273dc;
+      --visited-color:  #8b6fcb;
+      --code-background-color: #f2f2f2;
+      --code-color: #222;
+      --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+      :root {
+          --background-color: #111813;
+          --heading-color: #90ea89;
+          --text-color: #90ea89;
+          --link-color: #8cc2dd;
+          --visited-color:  #8b6fcb;
+          --code-background-color: #000;
+          --code-color: #ddd;
+          --blockquote-color: #ccc;
+      }
+  }
+
+  body {
+      font-family: var(--font-secondary);
+      font-size: var(--font-scale);
+      margin: auto;
+      padding: 20px;
+      max-width: var(--width);
+      text-align: left;
+      background-color: var(--background-color);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      line-height: 1.5;
+      color: var(--text-color);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-main);
+      color: var(--heading-color);
+  }
+
+  a {
+      color: var(--link-color);
+      cursor: pointer;
+      text-decoration: none;
+  }
+
+  a:hover {
+      text-decoration: underline;
+  }
+
+  nav a {
+      margin-right: 8px;
+  }
+
+  strong, b {
+      color: var(--heading-color);
+  }
+
+  button {
+      margin: 0;
+      cursor: pointer;
+  }
+
+  time {
+   	font-family: monospace;
+    	font-style: normal;
+    	font-size: 15px;
+  }
+
+  main {
+      line-height: 1.6;
+  }
+
+  table {
+      width: 100%;
+  }
+
+  hr {
+      border: 0;
+      border-top: 1px dashed;
+  }
+
+  img {
+      max-width: 100%;
+  }
+
+  code {
+      font-family: monospace;
+      padding: 2px;
+      background-color: var(--code-background-color);
+      color: var(--code-color);
+      border-radius: 3px;
+  }
+
+  blockquote {
+      border-left: 1px solid #999;
+      color: var(--code-color);
+      padding-left: 20px;
+      font-style: italic;
+  }
+
+  footer {
+      padding: 25px 0;
+      text-align: center;
+  }
+
+  .title:hover {
+      text-decoration: none;
+  }
+
+  .title h1 {
+      font-size: 1.5em;
+  }
+
+  .inline {
+      width: auto !important;
+  }
+
+  .highlight, .code {
+      padding: 1px 15px;
+      background-color: var(--code-background-color);
+      color: var(--code-color);
+      border-radius: 3px;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      overflow-x: auto;
+  }
+
+   
+  ul.blog-posts {
+      list-style-type: none;
+      padding: unset;
+  }
+
+  ul.blog-posts li {
+      display: flex;
+  }
+
+  ul.blog-posts li span {
+      flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+      color: var(--visited-color);
+  }
+</style>
+<style>
+    :root {
+        --font-scale: 1.3em;
+    }
+  .title {
+    display: flex;
+    align-items: center;
+     
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+  
+  .logo {
+    height: 2rem;
+    width: auto;
+  }
+</style> </head>
+
+<body>
+  <header><a href="/" class="title">
+  <img src="/images/logo_white.png" alt="logo" class="logo" style="width: 80px; height: 80px;">
+  <h2>cnode.phd</h2>
+</a></header>
+  <main>
+
+<content>
+  <h2 id="tree-folding-part-1">Tree-Folding part 1</h2>
+<p>This series is about approaching ZK research from a software-engineering perspective. We will be studying folding schemes by implementing &ldquo;tree-folding&rdquo; for <a href="https://eprint.iacr.org/2023/1106.pdf">protogalaxy</a> using <a href="https://github.com/privacy-scaling-explorations/sonobe/">Sonobe</a>, to answer some research questions.</p>
+<h2 id="recursive-zk-proofs">Recursive ZK Proofs</h2>
+<p>When you verify a zk proof inside of another zk proof, that’s called a recursive zk proof. Although it sounds silly; perhaps like something Xzibit would say on Pimp My Ride, recursive proof composition is extremely useful!</p>
+<p><img src="https://static0.thethingsimages.com/wordpress/wp-content/uploads/2021/08/xzibit.jpg" alt="xzibit" title="Xzibit pimp my ride"></p>
+<p>By breaking up large computations into multiple smaller proofs and using recursion to aggregate them, ZK applications can exploit parallelism to decrease the proving latency. Recursive proofs are a necessity to generate validity proofs of the state transition function for private blockchains, since the STF requires verifying client-side proofs generated by users.</p>
+<p>Recursive proofs are also used cleverly by succinct blockchains, like <a href="https://minaprotocol.com/">Mina</a>, who include a validity proof for each block inside the next block’s proof, perpetually collapsing verification of the entire blockchain from genesis into one tiny zk proof.</p>
+<p>Recursion can be naively implemented by implementing the proof system’s verifier as a circuit inside of itself, this is how STARK-based systems like <a href="https://github.com/succinctlabs/sp1">SP1</a> and <a href="https://github.com/risc0/risc0">Risc0</a> work. However, with curve (and perhaps <a href="https://eprint.iacr.org/2024/257">lattice</a>) based proof systems, some more interesting optimizations exist.</p>
+<h2 id="optimization-to-recursion-accumulation">Optimization to Recursion (Accumulation)</h2>
+<p>In <a href="https://eprint.iacr.org/2024/257">HALO</a> (2019), Bowe, Grigg, and Hopwood describe a proof system with an optimized recursion, achieved by utilizing two elliptic curves whose base field matches the other curve&rsquo;s scalar field, allowing them to verify each other with native arithmetic (avoiding the overhead from emulating larger fields in smaller fields). Additionally, it exploits the homomorphic nature of <a href="https://dankradfeist.de/ethereum/2021/07/27/inner-product-arguments.html">IPA commitments</a> to &ldquo;accumulate&rdquo; instances of recursion, &ldquo;deferring&rdquo; an expensive part of the proving process until after the recursion instances are accumulated.</p>
+<p>Later, the idea of &ldquo;accumulating&rdquo; instances of proof systems and clever optimizations to recursion was built upon by the literature on <em><a href="https://github.com/lurk-lab/awesome-folding">folding schemes</a></em>, notably <a href="https://eprint.iacr.org/2021/370">Nova</a>, which efficiently accumulates instances of proof systems for circuits defined as <a href="https://learn.0xparc.org/materials/circom/additional-learning-resources/r1cs%20explainer/">R1CS relations</a>. Later, <a href="https://eprint.iacr.org/2023/620.pdf">Protostar</a> generalized it to arbitrary kinds of relations (PLONK, AIR, or <a href="https://github.com/pluto/custom-constraints">CCS</a> constraints).</p>
+<p>After Protostar, <a href="https://eprint.iacr.org/2023/1106.pdf">Protogalaxy</a> proposed an updated version of the folding scheme that supports folding &gt; 2 instances of a circuit.</p>
+<h2 id="what-is-folding">What is Folding?</h2>
+<p>The mathematics underlying folding schemes sits somewhere between the circuit and the proof system. As we&rsquo;ll cover in this series, much of the folding scheme&rsquo;s implementation lies in the circuit side, rather than the polynomial IOP or commitment scheme. It builds ontop of existing SNARK proof systems (Nova <a href="https://github.com/microsoft/Nova/blob/main/src/nova/mod.rs#L931">utilizes Spartan</a>).</p>
+<p>Below is the <em>Augmented Circuit</em>, from an implementation of <a href="github.com/privacy-scaling-explorations/sonobe/">Protogalaxy</a>. Notice how the circuit definition includes <em>F</em>, the useful circuit supplied by the dev, <code>z_0</code>, the initial state of the recursive computation, and <code>z_i</code>, the newest state of the recursive computation. We will explore the remaining fields later in this blog series.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-RUST" data-lang="RUST"><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">AugmentedFCircuit</span><span style="color:#f92672">&lt;</span>C1: <span style="color:#a6e22e">Curve</span>, C2: <span style="color:#a6e22e">Curve</span>, <span style="color:#66d9ef">FC</span>: <span style="color:#a6e22e">FCircuit</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">CF1</span><span style="color:#f92672">&lt;</span>C1<span style="color:#f92672">&gt;&gt;&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) poseidon_config: <span style="color:#a6e22e">PoseidonConfig</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">CF1</span><span style="color:#f92672">&lt;</span>C1<span style="color:#f92672">&gt;&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) pp_hash: <span style="color:#a6e22e">CF1</span><span style="color:#f92672">&lt;</span>C1<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) i: <span style="color:#a6e22e">CF1</span><span style="color:#f92672">&lt;</span>C1<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) i_usize: <span style="color:#66d9ef">usize</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) z_0: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">CF1</span><span style="color:#f92672">&lt;</span>C1<span style="color:#f92672">&gt;&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) z_i: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">CF1</span><span style="color:#f92672">&lt;</span>C1<span style="color:#f92672">&gt;&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) external_inputs: <span style="color:#a6e22e">FC</span>::ExternalInputs,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) F: <span style="color:#a6e22e">FC</span>, <span style="color:#75715e">// F circuit
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) u_i_phi: <span style="color:#a6e22e">C1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) U_i: <span style="color:#a6e22e">CommittedInstance</span><span style="color:#f92672">&lt;</span>C1, <span style="color:#66d9ef">true</span><span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) U_i1_phi: <span style="color:#a6e22e">C1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) F_coeffs: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">CF1</span><span style="color:#f92672">&lt;</span>C1<span style="color:#f92672">&gt;&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) K_coeffs: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">CF1</span><span style="color:#f92672">&lt;</span>C1<span style="color:#f92672">&gt;&gt;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) phi_stars: Vec<span style="color:#f92672">&lt;</span>C1<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) cf1_u_i_cmW: <span style="color:#a6e22e">C2</span>,                        <span style="color:#75715e">// input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) cf2_u_i_cmW: <span style="color:#a6e22e">C2</span>,                        <span style="color:#75715e">// input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) cf_U_i: <span style="color:#a6e22e">CycleFoldCommittedInstance</span><span style="color:#f92672">&lt;</span>C2<span style="color:#f92672">&gt;</span>, <span style="color:#75715e">// input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) cf1_cmT: <span style="color:#a6e22e">C2</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) cf2_cmT: <span style="color:#a6e22e">C2</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="sonobe">Sonobe</h2>
+<p><a href="https://github.com/privacy-scaling-explorations/sonobe/">Sonobe</a> is <a href="https://pse.dev/en">PSE</a>&rsquo;s experimental folding scheme libary.</p>
+
+</content>
+<p>
+  
+</p>
+
+  </main>
+  <footer>
+</footer>  
+</body>
+
+</html> 
