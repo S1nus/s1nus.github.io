@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Copyright © 2025, colludingnode</copyright>
-    <lastBuildDate>Mon, 05 May 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 20 Jul 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://s1nus.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intro to AIR development</title>
+      <link>https://s1nus.github.io/intro_air_development/</link>
+      <pubDate>Sun, 20 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://s1nus.github.io/intro_air_development/</guid>
+      <description>&lt;h1 id=&#34;intro-to-air-development&#34;&gt;Intro to AIR development&lt;/h1&gt;&#xA;&lt;p&gt;Celestia&amp;rsquo;s zk blob inclusion proofs are powered by SP1, and it spends hundreds of thousands of riscV cycles on serialization. This overhead made me wonder if a custom AIR for blob inclusion proofs could have impressive savings- either as a standalone STARK, or as an SP1 precompile.&lt;/p&gt;&#xA;&lt;p&gt;To develop such an AIR, first you obtain an AIR for sha256, adapt it to compute merkle proofs, and finally perform NMT-specific checks.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Tree-Folding part 2</title>
       <link>https://s1nus.github.io/folding_with_protogalaxy2/</link>

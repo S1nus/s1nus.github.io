@@ -2,22 +2,23 @@
 <html lang="en-us">
 
 <head>
-	<meta name="generator" content="Hugo 0.147.0">
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>cnode&#39;s blog | cnode.phd</title>
-<meta name="title" content="cnode&#39;s blog" />
-<meta name="description" content="cnode.phd" />
+<title>Intro to AIR development | cnode.phd</title>
+<meta name="title" content="Intro to AIR development" />
+<meta name="description" content="Big zkVM doesn&#39;t want you to learn this" />
 <meta name="keywords" content="" />
 
 
-<meta property="og:url" content="https://s1nus.github.io/">
+<meta property="og:url" content="https://s1nus.github.io/intro_air_development/">
   <meta property="og:site_name" content="cnode.phd">
-  <meta property="og:title" content="cnode&#39;s blog">
-  <meta property="og:description" content="c-node’s blog This is our site. Poop">
+  <meta property="og:title" content="Intro to AIR development">
+  <meta property="og:description" content="Big zkVM doesn&#39;t want you to learn this">
   <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2025-07-20T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-07-20T00:00:00+00:00">
     <meta property="og:image" content="https://s1nus.github.io/images/share.png">
 
 
@@ -25,21 +26,20 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://s1nus.github.io/images/share.png">
-  <meta name="twitter:title" content="cnode&#39;s blog">
-  <meta name="twitter:description" content="c-node’s blog This is our site. Poop">
+  <meta name="twitter:title" content="Intro to AIR development">
+  <meta name="twitter:description" content="Big zkVM doesn&#39;t want you to learn this">
 
 
 
 
-  <meta itemprop="name" content="cnode&#39;s blog">
-  <meta itemprop="description" content="c-node’s blog This is our site. Poop">
+  <meta itemprop="name" content="Intro to AIR development">
+  <meta itemprop="description" content="Big zkVM doesn&#39;t want you to learn this">
   <meta itemprop="datePublished" content="2025-07-20T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-07-20T00:00:00+00:00">
-  <meta itemprop="wordCount" content="7">
+  <meta itemprop="wordCount" content="231">
   <meta itemprop="image" content="https://s1nus.github.io/images/share.png">
 <meta name="referrer" content="no-referrer-when-downgrade" />
 
-  <link rel="alternate" type="application/rss+xml" href="https://s1nus.github.io/index.xml" title="cnode.phd" />
   <style>
   :root {
       --width: 720px;
@@ -218,45 +218,34 @@
   <h2>cnode.phd</h2>
 </a></header>
   <main>
+
 <content>
-  <ul class="blog-posts">
-    
-    <li>
-      <span>
-        <i>
-          <time datetime='2025-07-20'>
-            20 Jul, 2025
-          </time>
-        </i>
-      </span>
-      <a href="https://s1nus.github.io/intro_air_development/">Intro to AIR development</a>
-    </li>
-    
-    <li>
-      <span>
-        <i>
-          <time datetime='2025-05-05'>
-            05 May, 2025
-          </time>
-        </i>
-      </span>
-      <a href="https://s1nus.github.io/folding_with_protogalaxy2/">Tree-Folding part 2</a>
-    </li>
-    
-    <li>
-      <span>
-        <i>
-          <time datetime='2025-04-29'>
-            29 Apr, 2025
-          </time>
-        </i>
-      </span>
-      <a href="https://s1nus.github.io/folding_with_protogalaxy/">Tree-Folding part 1</a>
-    </li>
-    
-  </ul>
-  
+  <h1 id="intro-to-air-development">Intro to AIR development</h1>
+<p>Celestia&rsquo;s zk blob inclusion proofs are powered by SP1, and it spends hundreds of thousands of riscV cycles on serialization. This overhead made me wonder if a custom AIR for blob inclusion proofs could have impressive savings- either as a standalone STARK, or as an SP1 precompile.</p>
+<p>To develop such an AIR, first you obtain an AIR for sha256, adapt it to compute merkle proofs, and finally perform NMT-specific checks.</p>
+<p>SP1 has a <a href="https://github.com/succinctlabs/sp1/blob/dev/crates/core/machine/src/syscall/precompiles/sha256/compress/air.rs">sha256 precompile</a>; it&rsquo;s a AIR circuit that computes sha256 hashes, and performs memory IO with the SP1 zkVM.</p>
+<p>Plonky3 has a <a href="https://github.com/Plonky3/Plonky3/tree/main/blake3-air">bunch</a> <a href="https://github.com/Plonky3/Plonky3/tree/main/keccak-air">of</a> <a href="https://github.com/Plonky3/Plonky3/tree/main/poseidon2-air">different</a> AIRs for hash functions, but no standalone air for sha256.</p>
+<p>I decided to pull the sha256 code out of SP1, and bring it into vanilla Plonky3 as a learning excersize.</p>
+<h2 id="scaffolding-a-sha256-air">Scaffolding a sha256 AIR</h2>
+<ul>
+<li>Copy-pasted columns and &ldquo;operation&rdquo; structs from SP1&rsquo;s sha256 into my vanilla plonky3 AIR.
+<ul>
+<li><a href="https://github.com/S1nus/Plonky3/blob/1ce93c1988a1760fc78858fd6bfa183ea55e17b6/sha256-air/src/columns.rs#L88">columns.rs</a></li>
+</ul>
+</li>
+<li>Note that the <a href="https://github.com/succinctlabs/sp1/blob/dev/crates/core/machine/src/operations/fixed_rotate_right.rs#L71">&ldquo;operation&rdquo; columns</a> reference these <code>ByteRecord</code> things, which appear to be some SP1-specific optimizations, maybe related to lookup arguments for range checks or something like that.</li>
+<li>In our vanilla Plonky3 approach, we will remove these optimizations and end up with a &ldquo;pure&rdquo; vanilla plonky3 sha256 implementation
+<ul>
+<li>Likely, this will involve doing range checks as standard gates in the AIR.</li>
+</ul>
+</li>
+<li>Then, as a learning excersize, we will re-implement these optimizations, and explore techniques like cross-table lookups, permutation argument, and regular lookups.</li>
+</ul>
+
 </content>
+<p>
+  
+</p>
 
   </main>
   <footer>
