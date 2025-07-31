@@ -2,25 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cnode&#39;s blog on cnode.phd</title>
-    <link>http://localhost:1313/</link>
+    <link>https://cnode.phd/</link>
     <description>Recent content in cnode&#39;s blog on cnode.phd</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Copyright © 2025, colludingnode</copyright>
-    <lastBuildDate>Sun, 20 Jul 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://cnode.phd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cyclotomic Fields</title>
+      <link>https://cnode.phd/cyclotomic_fields/</link>
+      <pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://cnode.phd/cyclotomic_fields/</guid>
+      <description>&lt;h1 id=&#34;cyclotomic-fields&#34;&gt;Cyclotomic Fields&lt;/h1&gt;&#xA;&lt;p&gt;You can go far as a ZK dev without any formal training in abstract or linear algebra. I managed to understand STARKs, pairings, plonk, KZG, and even folding schemes from a software engineering angle, without needing to dive too deep into algebra topics. However, to understand &lt;a href=&#34;https://eprint.iacr.org/2024/257&#34;&gt;LatticeFold&lt;/a&gt;, this has not been the case.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-study-latticefold&#34;&gt;Why study LatticeFold?&lt;/h2&gt;&#xA;&lt;p&gt;I am obsessed with &lt;em&gt;succinct blockchains&lt;/em&gt;, ever since stumbling upon &lt;a href=&#34;https://minaprotocol.com/wp-content/uploads/technicalWhitepaper.pdf&#34;&gt;Mina&lt;/a&gt; several years ago, and my motivation for learning ZK is mainly centered around improving this construction as much as possible. I dream of a high TPS succinct blockchain, with instant-syncing light nodes and &lt;a href=&#34;https://arxiv.org/abs/1809.09044&#34;&gt;data availability verification&lt;/a&gt;. This is the white whale I have chased for years now.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Intro to AIR development</title>
-      <link>http://localhost:1313/intro_air_development/</link>
+      <link>https://cnode.phd/intro_air_development/</link>
       <pubDate>Sun, 20 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/intro_air_development/</guid>
+      <guid>https://cnode.phd/intro_air_development/</guid>
       <description>&lt;h1 id=&#34;intro-to-air-development&#34;&gt;Intro to AIR development&lt;/h1&gt;&#xA;&lt;p&gt;Celestia&amp;rsquo;s zk blob inclusion proofs are powered by SP1, and it spends hundreds of thousands of riscV cycles on serialization. This overhead made me wonder if a custom AIR for blob inclusion proofs could have impressive savings- either as a standalone STARK, or as an SP1 precompile.&lt;/p&gt;&#xA;&lt;p&gt;To develop such an AIR, first you obtain an AIR for sha256, adapt it to compute merkle proofs, and finally perform NMT-specific checks.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Tree-Folding part 1</title>
-      <link>http://localhost:1313/folding_with_protogalaxy/</link>
+      <link>https://cnode.phd/folding_with_protogalaxy/</link>
       <pubDate>Tue, 29 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/folding_with_protogalaxy/</guid>
+      <guid>https://cnode.phd/folding_with_protogalaxy/</guid>
       <description>&lt;h2 id=&#34;tree-folding-part-1&#34;&gt;Tree-Folding part 1&lt;/h2&gt;&#xA;&lt;p&gt;This series is about approaching ZK research from a software-engineering perspective. We will be studying folding schemes by implementing &amp;ldquo;tree-folding&amp;rdquo; for &lt;a href=&#34;https://eprint.iacr.org/2023/1106.pdf&#34;&gt;protogalaxy&lt;/a&gt; using &lt;a href=&#34;https://github.com/privacy-scaling-explorations/sonobe/&#34;&gt;Sonobe&lt;/a&gt;, to answer some research questions.&lt;/p&gt;&#xA;&lt;h2 id=&#34;recursive-zk-proofs&#34;&gt;Recursive ZK Proofs&lt;/h2&gt;&#xA;&lt;p&gt;When you verify a zk proof inside of another zk proof, that’s called a recursive zk proof. Although it sounds silly; perhaps like something Xzibit would say on Pimp My Ride, recursive proof composition is extremely useful!&lt;/p&gt;</description>
     </item>
   </channel>
