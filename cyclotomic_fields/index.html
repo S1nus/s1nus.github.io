@@ -5,15 +5,15 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cyclotomic Fields | cnode.phd</title>
-<meta name="title" content="Cyclotomic Fields" />
+<title>Cyclotomic Fields and LatticeFold | cnode.phd</title>
+<meta name="title" content="Cyclotomic Fields and LatticeFold" />
 <meta name="description" content="Building the knowledge to understand LatticeFold, starting with Cyclotomic Fields" />
 <meta name="keywords" content="" />
 
 
 <meta property="og:url" content="https://cnode.phd/cyclotomic_fields/">
   <meta property="og:site_name" content="cnode.phd">
-  <meta property="og:title" content="Cyclotomic Fields">
+  <meta property="og:title" content="Cyclotomic Fields and LatticeFold">
   <meta property="og:description" content="Building the knowledge to understand LatticeFold, starting with Cyclotomic Fields">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
@@ -26,17 +26,17 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://cnode.phd/images/share.png">
-  <meta name="twitter:title" content="Cyclotomic Fields">
+  <meta name="twitter:title" content="Cyclotomic Fields and LatticeFold">
   <meta name="twitter:description" content="Building the knowledge to understand LatticeFold, starting with Cyclotomic Fields">
 
 
 
 
-  <meta itemprop="name" content="Cyclotomic Fields">
+  <meta itemprop="name" content="Cyclotomic Fields and LatticeFold">
   <meta itemprop="description" content="Building the knowledge to understand LatticeFold, starting with Cyclotomic Fields">
   <meta itemprop="datePublished" content="2025-07-31T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-07-31T00:00:00+00:00">
-  <meta itemprop="wordCount" content="166">
+  <meta itemprop="wordCount" content="783">
   <meta itemprop="image" content="https://cnode.phd/images/share.png">
 <meta name="referrer" content="no-referrer-when-downgrade" />
 
@@ -220,11 +220,33 @@
   <main>
 
 <content>
-  <h1 id="cyclotomic-fields">Cyclotomic Fields</h1>
+  <h1 id="cyclotomic-fields-and-latticefold">Cyclotomic Fields and LatticeFold</h1>
 <p>You can go far as a ZK dev without any formal training in abstract or linear algebra. I managed to understand STARKs, pairings, plonk, KZG, and even folding schemes from a software engineering angle, without needing to dive too deep into algebra topics. However, to understand <a href="https://eprint.iacr.org/2024/257">LatticeFold</a>, this has not been the case.</p>
 <h2 id="why-study-latticefold">Why study LatticeFold?</h2>
 <p>I am obsessed with <em>succinct blockchains</em>, ever since stumbling upon <a href="https://minaprotocol.com/wp-content/uploads/technicalWhitepaper.pdf">Mina</a> several years ago, and my motivation for learning ZK is mainly centered around improving this construction as much as possible. I dream of a high TPS succinct blockchain, with instant-syncing light nodes and <a href="https://arxiv.org/abs/1809.09044">data availability verification</a>. This is the white whale I have chased for years now.</p>
 <p>While STARKs dominate the modern zk proof landscape thanks to small fields and GPU-friendliness, you can&rsquo;t ignore the potential of <a href="../folding_with_protogalaxy">folding schemes</a> when focusing on <em>succinct blockchains</em> as the use-case. Mina itself uses <a href="https://eprint.iacr.org/2019/1021">HALO accumulation</a>, which can be viewed in this context as an older, more-primitive equivalent of folding schemes.</p>
+<h2 id="limitations-of-folding-schemes">Limitations of Folding Schemes</h2>
+<p>As discussed in <a href="https://x.com/liameagen">Liam</a>&rsquo;s <a href="https://youtu.be/zlvCL40nV50?t=17460">talk at ZuBerlin</a>, folding schemes have not been widely adopted. Part of the reasons given for this are the commitment costs associated with curve-based commitment schemes due to large fields, and the need to &ldquo;keep the witness around&rdquo; when doing distributed proving.</p>
+<p>The former makes sense- it&rsquo;s entirely possible that a succinct blockchain built using STARK recursion might actually be faster, since the proofs can be computed so much faster thanks to hardware friendliness. However, the second point does not apply since it&rsquo;s a different use-case.</p>
+<p>I&rsquo;ll argue the real reason folding schemes haven&rsquo;t been adopted is because&hellip; in the grand scheme of things, ZK is a pretty small scene. Not every team has a good use-case for folding, and they have already married different approaches like STARKs. Not that many people are building in this space. They&rsquo;re still pretty new, it&rsquo;s going to take some time.</p>
+<h2 id="does-laticefold-overcome-these-limitations">Does LaticeFold overcome these limitations?</h2>
+<p>The high commitment cost of using curve-based proof system is no joke, but there&rsquo;s a chance lattices might offer a solution. The fields used in Lattice cryptography are smaller than elliptic curve fields. In Nethermind&rsquo;s LatticeFold codebase, we see <em>cyclotomic fields</em> <a href="https://github.com/NethermindEth/latticefold/blob/main/cyclotomic-rings/src/rings/babybear.rs">constructed over BabyBear</a> (a 32-bit GPU-friendly field).</p>
+<p>Some overhead is incurred because they&rsquo;re not as simple as the prime fields used in STARKs. <a href="https://en.wikipedia.org/wiki/Cyclotomic_field">Cyclotomic fields</a> are complex numbers with multiple components, so performing arithmetic operations on them is more like vector operations than integer operations. Still, it certainly seems like there is a chance they might be more hardware-friendly and practical than other folding schemes, and it&rsquo;s worth determining this experimentally to see if this gives us the sweet spot between folding&rsquo;s cheap recursion, and the hardware friendliness of STARKs.</p>
+<h2 id="cyclotomic-fields">Cyclotomic Fields</h2>
+<p>The SNARK and STARK schemes you&rsquo;re familiar with are probably using <a href="https://en.wikipedia.org/wiki/Finite_field">prime fields</a>, or perhaps extension fields if you&rsquo;re particularly deep in the weeds (see <a href="https://vitalik.eth.limo/general/2024/04/29/binius.html">vitalik&rsquo;s Binius explainer</a> which touches on this concept).</p>
+<p>The Lattice-based schemes tend to use Cyclotomic Fields, which are a different kind of field. If I understand correctly, this means the circuits for these proofs sytemes need to be written with their variables and constraints in cyclotomic fields, rather than the kind we are used to, which means we can&rsquo;t use any existing ZK circuit tooling, and we might have to be aware of some new concepts.</p>
+<p>For this reason, I began to dive into algebra to understand how these things work, so I might be able to develop a circuit for these proof systems when the time comes.</p>
+<h2 id="why-cyclotomic-fields">Why Cyclotomic Fields?</h2>
+<p>While many snarks, digital signatures, and encryption are based on the computational hardness of <a href="https://en.wikipedia.org/wiki/Discrete_logarithm">the discrete log problem</a>, Lattice constructions are based on a different class of computationally hard problem, called <a href="https://en.wikipedia.org/wiki/Short_integer_solution_problem">Short Integer Solution</a> (SIS) problems.</p>
+<p>According to the Wikipedia page, there are different variants of the SIS problem, notably the Ring SIS (&ldquo;R-SIS&rdquo;) and Module SIS (&ldquo;M-SIS&rdquo;) problems, which deal with Cyclotomic fields / rings.</p>
+<p><img src="../assets/variants_on_sis.png" alt="sis_variants"></p>
+<p>LatticeFold references the M-SIS problem and seems to be constructed on-top of it.</p>
+<p><img src="../assets/module_sis.png" alt="lattice_fold_msis"></p>
+<p>Additionally, we can see many of the codebases related to latticefold and Ajtai contain code for cyclotomic fields / rings, like from <a href="https://github.com/NethermindEth/latticefold/tree/main/cyclotomic-rings">Nethermind</a> and <a href="https://github.com/harnesslabs/cyclotomic">Autoparallel</a>.</p>
+<h2 id="not-your-grandmas-numbers">Not your grandma&rsquo;s numbers</h2>
+<p>While extension fields and cyclotomic fields polynomials, not numbers, they do behave like numbers in a lot of very important ways!</p>
+<p>They can be added, multiplied, subtracted, divided, and there is still a notion of &ldquo;one&rdquo; and &ldquo;zero&rdquo;, called multiplicative and additive identities, respectively. It turns out, this is all you need to develop circuits for useful statements.</p>
+<p>Stay tuned as I dive further into this and maybe I will write a more-formal explainer as I learn more.</p>
 
 </content>
 <p>
