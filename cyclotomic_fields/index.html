@@ -36,7 +36,7 @@
   <meta itemprop="description" content="Building the knowledge to understand LatticeFold, starting with Cyclotomic Fields">
   <meta itemprop="datePublished" content="2025-07-31T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-07-31T00:00:00+00:00">
-  <meta itemprop="wordCount" content="783">
+  <meta itemprop="wordCount" content="883">
   <meta itemprop="image" content="https://cnode.phd/images/share.png">
 <meta name="referrer" content="no-referrer-when-downgrade" />
 
@@ -244,9 +244,12 @@
 <p><img src="/images/module_sis.png" alt="lattice_fold_msis"></p>
 <p>Additionally, we can see many of the codebases related to latticefold and Ajtai contain code for cyclotomic fields / rings, like from <a href="https://github.com/NethermindEth/latticefold/tree/main/cyclotomic-rings">Nethermind</a> and <a href="https://github.com/harnesslabs/cyclotomic">Autoparallel</a>.</p>
 <h2 id="not-your-grandmas-numbers">Not your grandma&rsquo;s numbers</h2>
-<p>While extension fields and cyclotomic fields polynomials, not numbers, they do behave like numbers in a lot of very important ways!</p>
+<p>While extension fields and cyclotomic fields are polynomials, not numbers, they do behave like numbers in a lot of very important ways!</p>
 <p>They can be added, multiplied, subtracted, divided, and there is still a notion of &ldquo;one&rdquo; and &ldquo;zero&rdquo;, called multiplicative and additive identities, respectively. It turns out, this is all you need to develop circuits for useful statements.</p>
 <p>Stay tuned as I dive further into this and maybe I will write a more-formal explainer as I learn more.</p>
+<h2 id="a-note-on-data-availability-and-succinct-blockchains">A note on data availability and succinct blockchains</h2>
+<p>If data availability verification is a design goal for the <em>idealized succinct blockcahin</em>, then one might infer that <a href="https://eprint.iacr.org/2025/034">ZODA</a> and <a href="https://eprint.iacr.org/2025/918">The Accidental Computer</a> are the best known ways to prove and verify the chain. Does that change anything?</p>
+<p>Not really. While GKR proves statements over &ldquo;depth-2 arithmetic circuits&rdquo;, if your goal is to include a proof of the previous block&rsquo;s validity in the statement for the current block, folding schemes might still be the best way to do it! So folding is still relevant even in the world of interactive proofs.</p>
 
 </content>
 <p>
