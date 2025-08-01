@@ -24,7 +24,7 @@
       <description>&lt;h1 id=&#34;intro-to-air-development&#34;&gt;Intro to AIR development&lt;/h1&gt;&#xA;&lt;p&gt;Celestia&amp;rsquo;s zk blob inclusion proofs are powered by SP1, and it spends hundreds of thousands of riscV cycles on serialization. This overhead made me wonder if a custom AIR for blob inclusion proofs could have impressive savings- either as a standalone STARK, or as an SP1 precompile.&lt;/p&gt;&#xA;&lt;p&gt;To develop such an AIR, first you obtain an AIR for sha256, adapt it to compute merkle proofs, and finally perform NMT-specific checks.&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Tree-Folding part 1</title>
+      <title>Tree-Folding &amp; Protogalaxy</title>
       <link>https://cnode.phd/folding_with_protogalaxy/</link>
       <pubDate>Tue, 29 Apr 2025 00:00:00 +0000</pubDate>
       <guid>https://cnode.phd/folding_with_protogalaxy/</guid>
