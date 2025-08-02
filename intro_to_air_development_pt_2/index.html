@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AIR Development Pt. 2 | cnode.phd</title>
+<meta name="title" content="AIR Development Pt. 2" />
+<meta name="description" content="We continue to implement sha256 in AIR using Plonky3" />
+<meta name="keywords" content="" />
+
+
+<meta property="og:url" content="https://cnode.phd/intro_to_air_development_pt_2/">
+  <meta property="og:site_name" content="cnode.phd">
+  <meta property="og:title" content="AIR Development Pt. 2">
+  <meta property="og:description" content="We continue to implement sha256 in AIR using Plonky3">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2025-08-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-08-01T00:00:00+00:00">
+    <meta property="og:image" content="https://cnode.phd/images/share.png">
+
+
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://cnode.phd/images/share.png">
+  <meta name="twitter:title" content="AIR Development Pt. 2">
+  <meta name="twitter:description" content="We continue to implement sha256 in AIR using Plonky3">
+
+
+
+
+  <meta itemprop="name" content="AIR Development Pt. 2">
+  <meta itemprop="description" content="We continue to implement sha256 in AIR using Plonky3">
+  <meta itemprop="datePublished" content="2025-08-01T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-08-01T00:00:00+00:00">
+  <meta itemprop="wordCount" content="790">
+  <meta itemprop="image" content="https://cnode.phd/images/share.png">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  :root {
+      --width: 720px;
+      --font-main: Verdana, sans-serif;
+      --font-secondary: Verdana, sans-serif;
+      --font-scale: 1em;
+      --background-color: #fff;
+      --heading-color: #222;
+      --text-color: #444;
+      --link-color: #3273dc;
+      --visited-color:  #8b6fcb;
+      --code-background-color: #f2f2f2;
+      --code-color: #222;
+      --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+      :root {
+          --background-color: #111813;
+          --heading-color: #90ea89;
+          --text-color: #90ea89;
+          --link-color: #8cc2dd;
+          --visited-color:  #8b6fcb;
+          --code-background-color: #000;
+          --code-color: #ddd;
+          --blockquote-color: #ccc;
+      }
+  }
+
+  body {
+      font-family: var(--font-secondary);
+      font-size: var(--font-scale);
+      margin: auto;
+      padding: 20px;
+      max-width: var(--width);
+      text-align: left;
+      background-color: var(--background-color);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      line-height: 1.5;
+      color: var(--text-color);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-main);
+      color: var(--heading-color);
+  }
+
+  a {
+      color: var(--link-color);
+      cursor: pointer;
+      text-decoration: none;
+  }
+
+  a:hover {
+      text-decoration: underline;
+  }
+
+  nav a {
+      margin-right: 8px;
+  }
+
+  strong, b {
+      color: var(--heading-color);
+  }
+
+  button {
+      margin: 0;
+      cursor: pointer;
+  }
+
+  time {
+   	font-family: monospace;
+    	font-style: normal;
+    	font-size: 15px;
+  }
+
+  main {
+      line-height: 1.6;
+  }
+
+  table {
+      width: 100%;
+  }
+
+  hr {
+      border: 0;
+      border-top: 1px dashed;
+  }
+
+  img {
+      max-width: 100%;
+  }
+
+  code {
+      font-family: monospace;
+      padding: 2px;
+      background-color: var(--code-background-color);
+      color: var(--code-color);
+      border-radius: 3px;
+  }
+
+  blockquote {
+      border-left: 1px solid #999;
+      color: var(--code-color);
+      padding-left: 20px;
+      font-style: italic;
+  }
+
+  footer {
+      padding: 25px 0;
+      text-align: center;
+  }
+
+  .title:hover {
+      text-decoration: none;
+  }
+
+  .title h1 {
+      font-size: 1.5em;
+  }
+
+  .inline {
+      width: auto !important;
+  }
+
+  .highlight, .code {
+      padding: 1px 15px;
+      background-color: var(--code-background-color);
+      color: var(--code-color);
+      border-radius: 3px;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      overflow-x: auto;
+  }
+
+   
+  ul.blog-posts {
+      list-style-type: none;
+      padding: unset;
+  }
+
+  ul.blog-posts li {
+      display: flex;
+  }
+
+  ul.blog-posts li span {
+      flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+      color: var(--visited-color);
+  }
+</style>
+<style>
+    :root {
+        --font-scale: 1.3em;
+    }
+  .title {
+    display: flex;
+    align-items: center;
+     
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+  
+  .logo {
+    height: 2rem;
+    width: auto;
+  }
+</style> </head>
+
+<body>
+  <header><a href="/" class="title">
+  <img src="/images/logo_white.png" alt="logo" class="logo" style="width: 80px; height: 80px;">
+  <h2>cnode.phd</h2>
+</a></header>
+  <main>
+
+<content>
+  <h1 id="this-work-is-already-done">This work is already done.</h1>
+<p><a href="https://succinct.xyz">Succinct</a> has already implemented sha256 in Plonky3 (as an <a href="https://github.com/succinctlabs/sp1/tree/dev/crates/core/machine/src/syscall/precompiles/sha256">SP1 precompile</a>), so why do this as a learning excersize? Isn&rsquo;t there something more useful to do as a learning excersize?</p>
+<p>Succinct Labs&rsquo; sha256 precompile is heavily coupled to SP1 itself. The architecture of SP1 has deeply-baked optimizations built into its proof system. Sha256 is a great example of a computation that leverages cross-table lookups, and lookups from precomputed tables. It is ubiquitous in applications that benefit from ZK tech. Learning how to implement it optimally in a circuit will be useful when we later want to arithmetize it for new proof systems like <a href="https://github.com/nethermindEth/latticefold/">Nethermind&rsquo;s LatticeFold</a>, or <a href="https://github.com/privacy-scaling-explorations/sonobe/">PSE&rsquo;s Sonobe</a>- research implementations that seem to favor <a href="https://eprint.iacr.org/2023/552">CCS</a>, a constraint system that doesn&rsquo;t have any good tooling yet, although it can capture R1CS, Plonkish, or AIR without any overhead; and I wonder if that implies that it can express some computations more efficiently.</p>
+<p>This is a mostly pedagogical endeavour.</p>
+<h1 id="plonky3s-keccak-air-is-simple">Plonky3&rsquo;s keccak-air is simple</h1>
+<p>In one of the examples, the author (<a href="https://github.com/jonathanpwang">jonathanpwang</a> et al) passes a <code>Vec&lt;[u64; 25]&gt;</code> into the circuit as <a href="https://github.com/Plonky3/Plonky3/blob/main/keccak-air/examples/prove_baby_bear_sha256.rs#L63">its inputs</a>. It&rsquo;s not yet clear to me how to interpret those u64s (stay tuned for next part when / if I figure it out).</p>
+<p>Then, in the trace generation, we can see that xor operations <a href="https://github.com/Plonky3/Plonky3/blob/main/keccak-air/src/generation.rs#L85">are performed</a> on the values, which leads me to suspect that the circuit is written assuming these columns are <em>bits</em>.</p>
+<p>This is also apparent from the code and comments <a href="https://github.com/Plonky3/Plonky3/blob/main/keccak-air/src/air.rs#L88">in the constraints</a>.</p>
+<h1 id="sp1s-is-not-as-simple">SP1&rsquo;s is not as simple</h1>
+<p>Rather than treating AIR columns as bits, SP1&rsquo;s AIR columns seem to have a notion of a <code>Word</code>- column values represent more than one bit of information; they use four columns (31 bit BabyBear field elements) to represent a 32 bit word, like on a 32 bit RISC-V CPU.</p>
+<p><a href="https://github.com/succinctlabs/sp1/blob/53dba77265e1bc4e2df0d17418d6864357d4b700/crates/stark/src/word.rs#L13C1-L21C40">From</a> <a href="https://github.com/succinctlabs/sp1/blob/dev/crates/primitives/src/consts.rs#L8">SP1</a>,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#e6db74">/// The size of a word in bytes.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">WORD_SIZE</span>: <span style="color:#66d9ef">usize</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/// An array of four bytes to represent a 32-bit value.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">///
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/// We use the generic type `T` to represent the different representations of a byte, ranging from
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/// a `u8` to a `AB::Var` or `AB::Expr`.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#75715e">#[derive(
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    AlignedBorrow, Clone, Copy, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#[repr(C)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Word</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(<span style="color:#66d9ef">pub</span> [T; <span style="color:#66d9ef">WORD_SIZE</span>]);
+</span></span></code></pre></div><p>In <a href="https://github.com/succinctlabs/sp1/blob/53dba77265e1bc4e2df0d17418d6864357d4b700/crates/core/machine/src/syscall/precompiles/sha256/compress/columns.rs#L50">the sha256 precompile</a>, we can see many of the columns are defined as <code>Word</code>s:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#e6db74">/// A set of columns needed to compute the SHA-256 compression function.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">///
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/// Each sha compress syscall is processed over 80 columns, split into 10 octets. The first octet is
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/// for initialization, the next 8 octets are for compression, and the last octet is for finalize.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/// During init, the columns are initialized with the input values, one word at a time. During each
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/// compression cycle, one iteration of sha compress is computed. During finalize, the columns are
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/// combined and written back to memory.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#75715e">#[derive(AlignedBorrow, Default, Debug, Clone, Copy)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#[repr(C)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">ShaCompressCols</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/// struct fields ommitted
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> a: <span style="color:#a6e22e">Word</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> b: <span style="color:#a6e22e">Word</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> c: <span style="color:#a6e22e">Word</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> d: <span style="color:#a6e22e">Word</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> e: <span style="color:#a6e22e">Word</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> f: <span style="color:#a6e22e">Word</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> g: <span style="color:#a6e22e">Word</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> h: <span style="color:#a6e22e">Word</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/// more struct fields ommitted
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>So&hellip; how do you write algebraic constraints for sha256&rsquo;s many bitwise operations, over <code>Word</code> values?</p>
+<h1 id="represent-bitwise-operations-on-words-with-algebra">Represent bitwise operations on <code>Word</code>s&hellip; with algebra?!?!</h1>
+<p>At first I thought I was going crazy, and I looked into whether or not it was possible to compute bitwise XOR for 32 bit values using arithmetic operations. Google led me to <a href="https://math.stackexchange.com/questions/61556/how-to-represent-xor-of-two-decimal-numbers-with-arithmetic-operators">this StackExchange answer</a>, which momentarily spiked my blood pressure until I realized it was assuming boolean values. Dammit. If there is something I&rsquo;m missing here, let me know.</p>
+<h1 id="use-lookups-like-a-real-man">Use lookups like a real man</h1>
+<p>It turns out, this is one of the places where SP1 uses some slightly fancier tech.</p>
+<p>The <code>Word</code> values are constrained with range checks, and binary operations are defined on another AIR. This is achieved via a cross-table lookup.</p>
+<p>Lookups are a blind spot in my personal ZK knowledge. My original understanding of lookups was for <em>precomputed values</em> for useful functions like binary operations on <code>u8</code>s , but AIR whiz kids use lookups to glue multiple starks containing variables together.</p>
+<h1 id="there-is-no-cross-table-lookup-example-in-plonky3">There is no cross-table lookup example in Plonky3</h1>
+<p>I was unable to find a simple pedagogical example of a cross-table lookup in pure plonky3 (outside SP1).</p>
+<p>This means my learning project can go in multiple directions</p>
+<ol>
+<li>I implement cross-table lookups in Plonky3</li>
+<li>I implement a simpler sha256 AIR using fields as bits.</li>
+</ol>
+<p>As of August 2nd, I am leaning towards exploring option #1, because it might be a more interesting and useful learning project, as well as more state-of-the-art. And it gives me an excuse to finally dive into lookups, which have been one of my knowledge gaps.</p>
+
+</content>
+<p>
+  
+</p>
+
+  </main>
+  <footer>
+</footer>  
+</body>
+
+</html> 
