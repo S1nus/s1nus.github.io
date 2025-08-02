@@ -17,13 +17,6 @@
       <description>&lt;h1 id=&#34;this-work-is-already-done&#34;&gt;This work is already done.&lt;/h1&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://succinct.xyz&#34;&gt;Succinct&lt;/a&gt; has already implemented sha256 in Plonky3 (as an &lt;a href=&#34;https://github.com/succinctlabs/sp1/tree/dev/crates/core/machine/src/syscall/precompiles/sha256&#34;&gt;SP1 precompile&lt;/a&gt;), so why do this as a learning excersize? Isn&amp;rsquo;t there something more useful to do as a learning excersize?&lt;/p&gt;&#xA;&lt;p&gt;Succinct Labs&amp;rsquo; sha256 precompile is heavily coupled to SP1 itself. The architecture of SP1 has deeply-baked optimizations built into its proof system. Sha256 is a great example of a computation that leverages cross-table lookups, and lookups from precomputed tables. It is ubiquitous in applications that benefit from ZK tech. Learning how to implement it optimally in a circuit will be useful when we later want to arithmetize it for new proof systems like &lt;a href=&#34;https://github.com/nethermindEth/latticefold/&#34;&gt;Nethermind&amp;rsquo;s LatticeFold&lt;/a&gt;, or &lt;a href=&#34;https://github.com/privacy-scaling-explorations/sonobe/&#34;&gt;PSE&amp;rsquo;s Sonobe&lt;/a&gt;- research implementations that seem to favor &lt;a href=&#34;https://eprint.iacr.org/2023/552&#34;&gt;CCS&lt;/a&gt;, a constraint system that doesn&amp;rsquo;t have any good tooling yet, although it can capture R1CS, Plonkish, or AIR without any overhead; and I wonder if that implies that it can express some computations more efficiently.&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Mutability is Murder</title>
-      <link>https://cnode.phd/mutability_is_murder/</link>
-      <pubDate>Fri, 01 Aug 2025 00:00:00 +0000</pubDate>
-      <guid>https://cnode.phd/mutability_is_murder/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Cyclotomic Fields and LatticeFold</title>
       <link>https://cnode.phd/cyclotomic_fields/</link>
       <pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate>
