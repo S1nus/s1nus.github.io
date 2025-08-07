@@ -2,10 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://cnode.phd/intro_to_air_development_pt_2/</loc>
-    <lastmod>2025-08-01T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://cnode.phd/</loc>
+    <lastmod>2025-08-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://cnode.phd/resist_ai_slop/</loc>
+    <lastmod>2025-08-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://cnode.phd/intro_to_air_development_pt_2/</loc>
     <lastmod>2025-08-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cnode.phd/cyclotomic_fields/</loc>

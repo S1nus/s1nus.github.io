@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Copyright © 2025, colludingnode</copyright>
-    <lastBuildDate>Fri, 01 Aug 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 Aug 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://cnode.phd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Slop and Polish</title>
+      <link>https://cnode.phd/resist_ai_slop/</link>
+      <pubDate>Thu, 07 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>https://cnode.phd/resist_ai_slop/</guid>
+      <description>&lt;p&gt;Mark Twain once said “I didn&amp;rsquo;t have time to write a short letter, so I wrote a long one instead.”&lt;/p&gt;&#xA;&lt;p&gt;Remove clicks from your UIs. Remove steps from the dev experience. Remove words from your tweets, from your blog posts, from your technical docs, from your research papers. As Mark Twain implied, this requires effort; the result of the effort is called &lt;em&gt;&lt;a href=&#34;https://www.merriam-webster.com/dictionary/polish&#34;&gt;polish&lt;/a&gt;&lt;/em&gt;, and the lack of &lt;em&gt;polish&lt;/em&gt; is called &lt;em&gt;&lt;a href=&#34;https://www.merriam-webster.com/dictionary/slop&#34;&gt;slop&lt;/a&gt;&lt;/em&gt;.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>AIR Development Pt. 2</title>
       <link>https://cnode.phd/intro_to_air_development_pt_2/</link>
