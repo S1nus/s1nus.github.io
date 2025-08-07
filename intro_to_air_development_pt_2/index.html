@@ -36,7 +36,7 @@
   <meta itemprop="description" content="We continue to implement sha256 in AIR using Plonky3">
   <meta itemprop="datePublished" content="2025-08-01T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-08-01T00:00:00+00:00">
-  <meta itemprop="wordCount" content="790">
+  <meta itemprop="wordCount" content="793">
   <meta itemprop="image" content="https://cnode.phd/images/share.png">
 <meta name="referrer" content="no-referrer-when-downgrade" />
 
@@ -220,7 +220,8 @@
   <main>
 
 <content>
-  <h1 id="this-work-is-already-done">This work is already done.</h1>
+  <p>see <a href="../intro_air_development">part 1</a></p>
+<h1 id="this-work-is-already-done">This work is already done.</h1>
 <p><a href="https://succinct.xyz">Succinct</a> has already implemented sha256 in Plonky3 (as an <a href="https://github.com/succinctlabs/sp1/tree/dev/crates/core/machine/src/syscall/precompiles/sha256">SP1 precompile</a>), so why do this as a learning excersize? Isn&rsquo;t there something more useful to do as a learning excersize?</p>
 <p>Succinct Labs&rsquo; sha256 precompile is heavily coupled to SP1 itself. The architecture of SP1 has deeply-baked optimizations built into its proof system. Sha256 is a great example of a computation that leverages cross-table lookups, and lookups from precomputed tables. It is ubiquitous in applications that benefit from ZK tech. Learning how to implement it optimally in a circuit will be useful when we later want to arithmetize it for new proof systems like <a href="https://github.com/nethermindEth/latticefold/">Nethermind&rsquo;s LatticeFold</a>, or <a href="https://github.com/privacy-scaling-explorations/sonobe/">PSE&rsquo;s Sonobe</a>- research implementations that seem to favor <a href="https://eprint.iacr.org/2023/552">CCS</a>, a constraint system that doesn&rsquo;t have any good tooling yet, although it can capture R1CS, Plonkish, or AIR without any overhead; and I wonder if that implies that it can express some computations more efficiently.</p>
 <p>This is a mostly pedagogical endeavour.</p>
