@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Learning how to read zkSNARK papers | cnode.phd</title>
+<meta name="title" content="Learning how to read zkSNARK papers" />
+<meta name="description" content="Demystifying some formal ZK proof jargon" />
+<meta name="keywords" content="" />
+
+
+<meta property="og:url" content="https://cnode.phd/demystifying_formal_zksnark_jargon/">
+  <meta property="og:site_name" content="cnode.phd">
+  <meta property="og:title" content="Learning how to read zkSNARK papers">
+  <meta property="og:description" content="Demystifying some formal ZK proof jargon">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2025-12-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-12-01T00:00:00+00:00">
+    <meta property="og:image" content="https://cnode.phd/images/share.png">
+
+
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://cnode.phd/images/share.png">
+  <meta name="twitter:title" content="Learning how to read zkSNARK papers">
+  <meta name="twitter:description" content="Demystifying some formal ZK proof jargon">
+
+
+
+
+  <meta itemprop="name" content="Learning how to read zkSNARK papers">
+  <meta itemprop="description" content="Demystifying some formal ZK proof jargon">
+  <meta itemprop="datePublished" content="2025-12-01T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-12-01T00:00:00+00:00">
+  <meta itemprop="wordCount" content="901">
+  <meta itemprop="image" content="https://cnode.phd/images/share.png">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  :root {
+      --width: 720px;
+      --font-main: Verdana, sans-serif;
+      --font-secondary: Verdana, sans-serif;
+      --font-scale: 1em;
+      --background-color: #fff;
+      --heading-color: #222;
+      --text-color: #444;
+      --link-color: #3273dc;
+      --visited-color:  #8b6fcb;
+      --code-background-color: #f2f2f2;
+      --code-color: #222;
+      --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+      :root {
+          --background-color: #111813;
+          --heading-color: #90ea89;
+          --text-color: #90ea89;
+          --link-color: #8cc2dd;
+          --visited-color:  #8b6fcb;
+          --code-background-color: #000;
+          --code-color: #ddd;
+          --blockquote-color: #ccc;
+      }
+  }
+
+  body {
+      font-family: var(--font-secondary);
+      font-size: var(--font-scale);
+      margin: auto;
+      padding: 20px;
+      max-width: var(--width);
+      text-align: left;
+      background-color: var(--background-color);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      line-height: 1.5;
+      color: var(--text-color);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-main);
+      color: var(--heading-color);
+  }
+
+  a {
+      color: var(--link-color);
+      cursor: pointer;
+      text-decoration: none;
+  }
+
+  a:hover {
+      text-decoration: underline;
+  }
+
+  nav a {
+      margin-right: 8px;
+  }
+
+  strong, b {
+      color: var(--heading-color);
+  }
+
+  button {
+      margin: 0;
+      cursor: pointer;
+  }
+
+  time {
+   	font-family: monospace;
+    	font-style: normal;
+    	font-size: 15px;
+  }
+
+  main {
+      line-height: 1.6;
+  }
+
+  table {
+      width: 100%;
+  }
+
+  hr {
+      border: 0;
+      border-top: 1px dashed;
+  }
+
+  img {
+      max-width: 100%;
+  }
+
+  code {
+      font-family: monospace;
+      padding: 2px;
+      background-color: var(--code-background-color);
+      color: var(--code-color);
+      border-radius: 3px;
+  }
+
+  blockquote {
+      border-left: 1px solid #999;
+      color: var(--code-color);
+      padding-left: 20px;
+      font-style: italic;
+  }
+
+  footer {
+      padding: 25px 0;
+      text-align: center;
+  }
+
+  .title:hover {
+      text-decoration: none;
+  }
+
+  .title h1 {
+      font-size: 1.5em;
+  }
+
+  .inline {
+      width: auto !important;
+  }
+
+  .highlight, .code {
+      padding: 1px 15px;
+      background-color: var(--code-background-color);
+      color: var(--code-color);
+      border-radius: 3px;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      overflow-x: auto;
+  }
+
+   
+  ul.blog-posts {
+      list-style-type: none;
+      padding: unset;
+  }
+
+  ul.blog-posts li {
+      display: flex;
+  }
+
+  ul.blog-posts li span {
+      flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+      color: var(--visited-color);
+  }
+</style>
+<style>
+    :root {
+        --font-scale: 1.3em;
+    }
+  .title {
+    display: flex;
+    align-items: center;
+     
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+  
+  .logo {
+    height: 2rem;
+    width: auto;
+  }
+</style> </head>
+
+<body>
+  <header><a href="/" class="title">
+  <img src="/images/logo_white.png" alt="logo" class="logo" style="width: 80px; height: 80px;">
+  <h2>cnode.phd</h2>
+</a></header>
+  <main>
+
+<content>
+  <p>There are a lot of digestible explainers out there for popular ZK proof systems and their components, but reading the actual papers is hard; because the authors write rigorous proofs that the system has various security properties. While trying to understand proof systems that aren&rsquo;t as &ldquo;popular&rdquo; as the classics like PLONK and STARKs, I became unsatisfied with not easily knowing <em>why</em> the protocol works, and found it helpful to look into these security proofs to make sense of them.</p>
+<p>For this blog post, we&rsquo;ll be focusing on <a href="https://eprint.iacr.org/2016/263">Bootle16</a>, an important paper in the same lineage of <a href="https://eprint.iacr.org/2017/1066">Bulletproofs</a> and <a href="https://eprint.iacr.org/2019/1021">Halo</a>.</p>
+<p>Bootle16 starts by giving 12 numbered definitions, placed into different categories. In this blog post, I&rsquo;ll focus on two specific definitions from the <em>Zero-Knowledge Arguments of Knowledge</em> section,</p>
+<ol>
+<li>Statistical Witness-Extended Emulation</li>
+</ol>
+<ul>
+<li>Name sounds complicated, but is quite easy to understand.</li>
+</ul>
+<ol start="2">
+<li>Special Honest Verifier Zero-Knowledge</li>
+</ol>
+<ul>
+<li>A bit more complicated, took me quite some time to demystify.</li>
+</ul>
+<p>If you are inventing a new zkSNARK scheme, you have to formally prove that your scheme has these properties (or often substituting with similar properties) in order to have what&rsquo;s needed for the &ldquo;zk&rdquo; and &ldquo;ARK&rdquo; parts of zkSNARK. The &ldquo;S&rdquo; comes from succintness (concretely <em>efficient</em>), and the &ldquo;N&rdquo; comes from being non-interactive, which comes from the well-known Fiat-Shamir heuristic in most cases.</p>
+<h2 id="statistical-witness-extended-emulation">Statistical Witness-Extended Emulation</h2>
+<p>This property is related to something called <em>knowledge soundness</em>. This specific property is about ensuring (with a high probability), that the prover truly <em>knows</em> a witness that satisfies the statement, and didn&rsquo;t just make up some crap to pass the checks. It&rsquo;s not the only security property that needs a formal proof; other properties such as <em>completeness</em> are also needed to trust these constructions.</p>
+<p>In the paper, we see the <em>Statistical Witness-Extended Emulation</em> introduced (with a lot of scary jargon and notation) here:</p>
+<p><img src="/images/statistical_witness_extended_emulation.png" alt="statistical witness extended emulation"></p>
+<p>To put it in more simple terms, it means the probability that some algorithm can brute-force a satisfying witness for the statement is equal to the probability that some algorithm can brute-force a junk input that passes all the proof system&rsquo;s checks.</p>
+<p>That means if you&rsquo;re a verifier and you receive a valid proof, even if the prover brute-forced proof-generation with a supercomputer, it&rsquo;s just as likely that they brute-forced a valid input to the circuit than that they brute-forced some junk.</p>
+<p>So, if it&rsquo;s, for example, a zkEVM with statistical witness-extended emultation, then the attacker may have accidentally generated a valid Ethereum block while trying to brute-force a validity proof ^_^</p>
+<h2 id="special-honest-verifier-zero-knowledge">Special Honest Verifier Zero-Knowledge</h2>
+<p>While statistical witness extended emulation is related to the &ldquo;ARK&rdquo; (argument of knowledge) part of our <em>zkSNARK</em>, this property <em>Special Honest Verifier Zero-Knowledge</em> is related to the <em>ZK</em> part; ZK being a popular buzzword that is rightfully associated with <em>privacy</em>. To dumb it down to an offensive degree- this is how we know our construction is&hellip; private.</p>
+<p>From the paper, we see:</p>
+<p><img src="/images/special_honest_verifier_.png" alt="Special Honest Verifier Zero-Knowledge"></p>
+<p>Notice how they present an <em>equation</em> with the form $Pr[&hellip;] = Pr[&hellip;]$. The property is achieved for our scheme if these two <em>probabilities</em> are <em>equal</em>. Notice how the two sides have these different terms:</p>
+<p><img src="/images/s_and_pv.png" alt="S and P,V"></p>
+<p>and both start out with $(u,w,p) \leftarrow A(1^{\lambda})$. To understand the difference, recall from proof systems that you may be familiar with that proof consist of <em>transcripts</em> of messages, sent between a prover and verifier. These two terms describe different ways that these transcripts might hypothetically be generated.</p>
+<p>The difference between $\langle P(w, u) , V(u) \rangle$ and $S(u, p)$ is that the former is a normal interaction between a prover and verifier (resulting in a transcript), and the latter is an algorithm called a <em>simulator</em> (also resulting in a transcript).</p>
+<p>To understand the <em>simulator</em>, recall that our zkSNARK has zero-knowledge (is concretely <em>private</em>), if the proofs it produces don&rsquo;t leak anytihng about the secret witness (private inputs) that were used to create it. Imagine we are a scientist in a lab trying to break our own proof system in a specific way that will help us know if the proofs leak info about the witness. First, we will generate some real witness + instance pairs that satisfy the relation (valid inputs to the circuit for some statement). We will also <em>pre-generate</em> some randomness, instead of what an honest verifier would normally do, which is provide truly random challenges in response to the prover&rsquo;s messages during their interaction (or after being fiat-shamir&rsquo;d, it would normally derive randomness with hashes from the messages).</p>
+<p>We can get away with doing this because we are a scientist in a lab, and not using a production implementation of the proof system.</p>
+<p>Then, note that the simulator $S(u, p)$ <em>does not</em> take the witness as inputs, in contrast to the real prover / verifier pair. The simulator exploits the fact that the randomness is <em>pre-generated</em> to cheat at the protocol and produce seemingly-valid transcripts <em>without knowing the witness</em>.</p>
+<p>The last piece of notation is this:</p>
+<p><img src="/images/atr.png" alt="A(tr)"></p>
+<p>$A(tr)$ is a function that tries to determine if a transcript $tr$ came from a real prover-verifier interaction, we can call it <em>the distinguisher</em>, and it returns &ldquo;1&rdquo; if it thinks a transcript came from a real prover-verifier, and &ldquo;0&rdquo; if it thinks it came from a simulator.</p>
+<p>Putting it all back together, the equation basically says &ldquo;the probability that our <em>distinguisher</em> will return 1 on a real transcript is equal to the probability that it will return 1 on a transcript from the simulator&rdquo;.</p>
+
+</content>
+<p>
+  
+</p>
+
+  </main>
+  <footer>
+</footer>  
+</body>
+
+</html> 

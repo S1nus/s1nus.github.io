@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Copyright © 2025, colludingnode</copyright>
-    <lastBuildDate>Sun, 26 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://cnode.phd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Learning how to read zkSNARK papers</title>
+      <link>https://cnode.phd/demystifying_formal_zksnark_jargon/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://cnode.phd/demystifying_formal_zksnark_jargon/</guid>
+      <description>&lt;p&gt;There are a lot of digestible explainers out there for popular ZK proof systems and their components, but reading the actual papers is hard; because the authors write rigorous proofs that the system has various security properties. While trying to understand proof systems that aren&amp;rsquo;t as &amp;ldquo;popular&amp;rdquo; as the classics like PLONK and STARKs, I became unsatisfied with not easily knowing &lt;em&gt;why&lt;/em&gt; the protocol works, and found it helpful to look into these security proofs to make sense of them.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Create for an audience.</title>
       <link>https://cnode.phd/build_for_an_audience/</link>

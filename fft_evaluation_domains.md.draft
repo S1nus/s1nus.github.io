@@ -1,0 +1,48 @@
++++
+title = "All About FFT Evaluation Domains"
+date = "2025-12-01"
+description = "What's the deal with FFT evaluation domains, anyway?"
++++
+
+# Why FFTs in the ZK world?
+ZK proof systems incorporate a lot of polynomials. Often, it's useful to
+
+
+What is S?
+The constant S is part of the PrimeField trait in the ff crate (a Rust library for finite field arithmetic). It represents the 2-adicity (or two-adicity) of the finite field.
+Mathematical Meaning
+Given a prime field with modulus p, we can always factor p - 1 as:
+p - 1 = 2^s × t
+where t is an odd number. The value S is this exponent s - it tells you how many times 2 divides p - 1, or equivalently, the largest power of 2 that divides p - 1.
+Why is it Important?
+The 2-adicity is crucial for several cryptographic and computational operations:
+Fast Fourier Transforms (FFTs) / Number Theoretic Transforms (NTTs): To perform an FFT of size N = 2^k, you need a field that has a primitive N-th root of unity. This requires that 2^k divides p - 1. The value S tells you the maximum size FFT you can perform: 2^S.
+Root of Unity: As shown in the code, S is used to compute ROOT_OF_UNITY:
+lib.rsLines 337-341
+/// The `2^s` root of unity.////// It can be calculated by exponentiating `Self::MULTIPLICATIVE_GENERATOR` by `t`,/// where `t = (modulus - 1) >> Self::S`.const ROOT_OF_UNITY: Self;
+Zero-Knowledge Proofs: Systems like PLONK, Groth16, and other zk-SNARK protocols heavily rely on FFTs for polynomial operations. The 2-adicity determines the maximum circuit size you can support.
+Looking at your ragu project (which appears to be a zero-knowledge proof library), this constant is essential for the polynomial arithmetic and circuit evaluation that underlies the proof system!
+when you say "an FFT of size N", do you mean... interpolating a polynomial with N points, or evaluating a polynomial with N coefficients? 
+
+Great question! The answer is: both!
+An "FFT of size N" works with N data points in either direction:
+Forward FFT: Takes a polynomial with N coefficients and evaluates it at N specific points (the N-th roots of unity)
+Input: [c₀, c₁, c₂, ..., c_{N-1}] (coefficient representation)
+Output: [p(ω⁰), p(ω¹), p(ω²), ..., p(ω^{N-1})] (evaluation representation)
+Inverse FFT: Takes N evaluation points and interpolates to get N coefficients
+Input: [p(ω⁰), p(ω¹), p(ω²), ..., p(ω^{N-1})] (evaluation representation)
+Output: [c₀, c₁, c₂, ..., c_{N-1}] (coefficient representation)
+Both operations handle N data points and both require an N-th root of unity (where N must divide p - 1, hence the importance of S).
+Let me check your ragu codebase to show you how this is used in practice:
+Perfect! Looking at your ragu codebase, here's exactly how it's used:
+In Practice (from domain.rs)
+domain.rsLines 90-114
+/// Computes the radix2 discrete Fourier transform (DFT) of a slice of/// generic ring elements using the Cooley-Tukey FFT algorithm.pub fn ring_fft<R: crate::fft::Ring<F = F>>(&self, input: &mut [R::R]) {    crate::fft::fft::<R>(self.log2_n, input, self.omega);}/// Performs the inverse operation of [`Self::ring_fft`].pub fn ring_ifft<R: crate::fft::Ring<F = F>>(&self, input: &mut [R::R]) {    crate::fft::fft::<R>(self.log2_n, input, self.omega_inv);    for input in input.iter_mut() {        R::scale_assign(input, self.n_inv);    }}/// Computes the radix2 discrete Fourier transform (DFT) of a slice of field/// elements using the Cooley-Tukey FFT algorithm.pub fn fft(&self, input: &mut [F]) {    self.ring_fft::<crate::fft::FFTField<F>>(input);}/// Performs the inverse operation of [`Self::fft`].pub fn ifft(&self, input: &mut [F]) {    self.ring_ifft::<crate::fft::FFTField<F>>(input);}
+Notice how both operations work on N elements in-place:
+fft(): coefficient → evaluation (using omega)
+ifft(): evaluation → coefficient (using omega_inv)
+And look at line 39-44 - this shows the importance of S:
+domain.rsLines 38-45
+pub fn new(k: u32) -> Self {    if k > F::S {        panic!(            "tried to create a domain of size 2^{} in a field with 2-adicity {}",            k,            F::S        );    }
+You cannot create a domain of size 2^k if k > S, because you need a primitive 2^k-th root of unity, which only exists if 2^k divides p - 1!
+So to directly answer your question: "FFT of size N" means transforming N data points - whether that's N coefficients going to N evaluations, or N evaluations going to N coefficients.
